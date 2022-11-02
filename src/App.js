@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { 
+  Routes,
+  Route,
+  Navigate
+} from 'react-router-dom';
+import PostList from './Components/PostList';
+import SinglePostPage from './Components/SinglePostPage';
+import AddPostForm from './Components/AddPostForm';
+import Layout from './Components/Layout';
+import EditPostForm from './Components/EditPostForm';
+import UserList from './Components/UserList';
+import UserPage from './Components/UserPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+
+        <Route index element={<PostList />} />
+
+        <Route path="post">
+          <Route index element={<AddPostForm />} />
+          <Route path=":postId" element={<SinglePostPage />} />
+          <Route path="edit/:postId" element={<EditPostForm />} />
+        </Route>
+
+        <Route path='user'>
+            <Route index element={<UserList />} />
+            <Route path=':userId' element={<UserPage />} />
+        </Route>
+        
+        {/*404 page need to insert */}
+        <Route path='*' element={<Navigate to={'/'} replace="/" />} />
+
+      </Route>
+    </Routes>
+
   );
 }
 
